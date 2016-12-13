@@ -21,7 +21,7 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'bootstrap'],
     system.debug(true);
     //>>excludeEnd("build");
 
-    app.title = 'Durandal Starter Kit';
+    app.title = 'Threaty';
 
     app.configurePlugins({
         router:true,
