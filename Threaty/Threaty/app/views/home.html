@@ -1,6 +1,7 @@
-﻿<section>
+﻿<section class="container">
     <h2>Threaty Main Panel</h2>
-    <blockquote>Threaty is a tool to integrate information about threats.</blockquote>
+    <div data-bind="text: tt, click:function(){tt = 'bb'; console.log(tt);}"></div>
+    <blockquote>Threaty is a <strong>Security Advisory Tool</strong>. It integrates information about threats from various sources.</blockquote>
     <h3>Features</h3>
     <ul data-bind="foreach: features">
         <li data-bind="text:$data"></li>

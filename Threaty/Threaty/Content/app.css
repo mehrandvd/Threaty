@@ -24,15 +24,15 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 50px;
+  top: 60px;
   bottom: 0;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
-section {
-  margin: 0 20px;
-}
+/*section {
+    margin: 0 20px;
+}*/
 .navbar-nav li.loader {
   margin: 12px 6px 0 6px;
   visibility: hidden;
@@ -40,6 +40,44 @@ section {
 .navbar-nav li.loader.active {
   visibility: visible;
 }
-.pictureDetail {
-  max-width: 425px;
+/*.pictureDetail {
+    max-width: 425px;
+}*/
+.tracer-page {
+  padding: 20px 0px;
+}
+
+.progress-container {
+    position: relative;
+}
+
+.search-row .progress {
+    position: absolute;
+    width: 100%;
+    top: 5px;
+}
+
+.result-part {
+    border-top: solid 8px #18bc9c;
+    margin-top: 20px;
+    padding-top: 30px;
+}
+
+.result-source-container {
+    padding: 3px;
+}
+
+.result-source {
+    min-height: 130px;
+    border: solid 1px #18bc9c;
+    padding: 10px;
+}
+
+.result-source:hover {
+    border: solid 3px #18bc9c;
+}
+
+.result-source h4 {
+    border-left: solid 8px #18bc9c;
+    padding-left: 8px;
 }
