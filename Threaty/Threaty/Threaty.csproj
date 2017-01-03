@@ -191,8 +191,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiController\ThreatyController.cs" />
+    <Compile Include="Model\ThreatSourceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ThreatSource\IThreatSource.cs" />
+    <Compile Include="ThreatSource\ThreatSourceService.cs" />
     <Compile Include="WebApiConfig.cs" />
   </ItemGroup>
   <PropertyGroup>

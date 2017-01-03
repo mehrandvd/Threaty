@@ -28,16 +28,27 @@
         self.getSources = function(searchText) {
             var def = $.Deferred();
 
-            setTimeout(function () {
-                def.resolve([
-                    new ThreatSource("1", "Threat Miner", "https://www.threatminer.org/"),
-                    new ThreatSource("1", "Threat Crowd", "https://www.threatcrowd.org"),
-                    new ThreatSource("1", "OTX", "otx.alienvault.com"),
-                    new ThreatSource("1", "Total Hash", "https://totalhash.cymru.com"),
-                    new ThreatSource("1", "Malware Check", "http://malwarecheck.org"),
-                    new ThreatSource("1", "Bit Defender", "http://www.bitdefender.com/scanner/online/free.html")
-                ]);
-            }, 1500);
+            $.getJSON('api/Threaty/GetThreatSources').done(function(result) {
+                var list = [];
+                for (var i in result) {
+                    var item = result[i];
+
+                    list.push(new ThreatSource(item.name, item.title, item.url));
+                }
+                def.resolve(list);
+
+            });
+
+            //setTimeout(function () {
+            //    def.resolve([
+            //        new ThreatSource("1", "Threat Miner", "https://www.threatminer.org/"),
+            //        new ThreatSource("1", "Threat Crowd", "https://www.threatcrowd.org"),
+            //        new ThreatSource("1", "OTX", "otx.alienvault.com"),
+            //        new ThreatSource("1", "Total Hash", "https://totalhash.cymru.com"),
+            //        new ThreatSource("1", "Malware Check", "http://malwarecheck.org"),
+            //        new ThreatSource("1", "Bit Defender", "http://www.bitdefender.com/scanner/online/free.html")
+            //    ]);
+            //}, 1500);
 
             return def;
         }
