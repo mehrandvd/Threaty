@@ -1,118 +1,96 @@
 ﻿define(['durandal/app', 'knockout'], function (app, ko) {
-   // var ctor = function () {
-        var self = {};
-        self.searchText = ko.observable();
-        self.isBusy = ko.observable(false);
-        self.sources =ko.observable([]);
+    // var ctor = function () {
+    var self = {};
+    self.searchText = ko.observable();
+    self.isBusy = ko.observable(false);
+    self.iocs = ko.observable([]);
+    self.isIocInDb = ko.observable(null);
 
-        self.activate = function() {
-            return true;
-        };
+    self.activate = function () {
+        return true;
+    };
 
-       
+    var Ioc = function (status, sourceName, malwareName, lastUpdate, isSyncWithDb, summary) {
+        var selfIoc = this;
+        selfIoc.status = status;
+        selfIoc.sourceName = sourceName;
+        selfIoc.malwareName = malwareName;
+        selfIoc.lastUpdate = lastUpdate;
+        selfIoc.isInDb = isSyncWithDb;
+        selfIoc.summary = summary;
+    }
 
-        var Threat = function(type) {
-            var selfThreat = this;
-            selfThreat.TYPE = type;
-        }
+    self.getIocs = function (searchText) {
+        var def = $.Deferred();
 
-        var ThreatSource = function (id, title, description) {
-            var selfSource = this;
-            selfSource.id = id;
-            selfSource.title = title;
-            selfSource.description = description;
-            selfSource.isBusy = ko.observable(false);
-            selfSource.threats = ko.observableArray();
-        }
+        //            $.getJSON('api/Threaty/GetIocs').done(function(result) {
+        //                var list = [];
+        //                for (var i in result) {
+        //                    var item = result[i];
+        //
+        //                    list.push(new ThreatSource(item.name, item.title, item.url));
+        //                }
+        //                def.resolve(list);
+        //
+        //            });
 
-        self.getSources = function(searchText) {
-            var def = $.Deferred();
+        setTimeout(function () {
+            def.resolve([
+                new Ioc("ok", "Threat Miner", "Floky", "2015/05/04", true),
+                new Ioc("ok", "Threat Crowd", "Floky", "2015/05/04", false),
+                new Ioc("threat", "OTX", "Stuxnet", "2015/05/04", true),
+                new Ioc("ok", "Total Hash", "Floky", "2015/05/04", false),
+                new Ioc("ok", "Malware Check", "Stuxnet", "2015/05/04", true),
+                new Ioc("ok", "Bit Defender", "Floky", "2015/05/04", false)
+            ]);
+        }, 1500);
 
-            $.getJSON('api/Threaty/GetThreatSources').done(function(result) {
-                var list = [];
-                for (var i in result) {
-                    var item = result[i];
+        return def;
 
-                    list.push(new ThreatSource(item.name, item.title, item.url));
-                }
-                def.resolve(list);
+    }
 
+    self.getIsIocInDb = function (searchText) {
+        var def = $.Deferred();
+
+        setTimeout(function () {
+            def.resolve(true);
+        }, 1500);
+
+        return def;
+    }
+
+
+    self.search = function () {
+        self.isBusy(true);
+        var searchText = self.searchText;
+        self.getIocs(searchText)
+            .done(function (sources) {
+                self.iocs(sources);
+                self.isBusy(false);
+
+                toastr.success(sources.length + " sources identified to gather information");
+            })
+            .fail(function (err) {
+                console.log(err);
+                toastr.error(err);
+                self.isBusy(false);
             });
 
-            //setTimeout(function () {
-            //    def.resolve([
-            //        new ThreatSource("1", "Threat Miner", "https://www.threatminer.org/"),
-            //        new ThreatSource("1", "Threat Crowd", "https://www.threatcrowd.org"),
-            //        new ThreatSource("1", "OTX", "otx.alienvault.com"),
-            //        new ThreatSource("1", "Total Hash", "https://totalhash.cymru.com"),
-            //        new ThreatSource("1", "Malware Check", "http://malwarecheck.org"),
-            //        new ThreatSource("1", "Bit Defender", "http://www.bitdefender.com/scanner/online/free.html")
-            //    ]);
-            //}, 1500);
+        self.getIsIocInDb(searchText).done(function(isIocInDb) {
+            self.isIocInDb(isIocInDb);
+            })
+            .fail(function(err) {
+                console.log(err);
+                toastr.error(err);
+            });
+    }
 
-            return def;
-        }
+    self.onSearchClicked = function (data, elem) {
+        self.search();
+    };
+    // };
 
-        function getThreats(threadSource) {
-            var def = $.Deferred();
 
-            setTimeout(function () {
-                def.resolve([
-                    new Threat("hash"),
-                    new Threat("domain"),
-                    new Threat("ioc"),
-                    new Threat("attack")
-                ]);
-            }, 1200);
-
-            return def;
-        }
-
-        function loadThreatSource(threadSource) {
-            threadSource.isBusy(true);
-            getThreats(threadSource)
-                .done(function (result) {
-                    threadSource.isBusy(false);
-
-                })
-                .fail(function (err) {
-                    threadSource.isBusy(false);
-                    toastr.error(err);
-                    console.log(err);
-                });
-        }
-
-       
-
-        self.search = function() {
-            self.isBusy(true);
-            var searchText = self.searchText;
-            self.getSources(searchText)
-                .done(function(sources) {
-                    self.sources(sources);
-                    self.isBusy(false);
-
-                    toastr.success(sources.length + " sources identified to gather information");
-
-                    for (var sourceIndex in sources) {
-                        var source = sources[sourceIndex];
-                        loadThreatSource(source);
-                    }
-
-                })
-                .fail(function(err) {
-                    console.log(err);
-                    toastr.error(err);
-                    self.isBusy(false);
-                });
-        }
-
-        self.onSearchClicked = function(data, elem) {
-            self.search();
-        };
-   // };
-
-   
 
     return self;
 });

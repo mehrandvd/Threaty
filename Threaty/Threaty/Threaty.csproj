@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\main.js" />
+    <Content Include="app\viewmodels\malsync.js" />
     <Content Include="app\viewmodels\tracer.js" />
     <Content Include="app\viewmodels\flickr.js" />
     <Content Include="app\viewmodels\shell.js" />
@@ -104,7 +105,10 @@
     <Content Include="app\views\flickr.html" />
     <Content Include="app\views\shell.html" />
     <Content Include="app\views\home.html" />
+    <Content Include="app\views\malsync.html" />
     <Content Include="app\views\tracer.html" />
+    <Content Include="app\widgets\togglebutton\view.html" />
+    <Content Include="app\widgets\togglebutton\viewmodel.js" />
     <Content Include="Content\app.css">
       <DependentUpon>app.less</DependentUpon>
     </Content>
@@ -198,6 +202,7 @@
     <Compile Include="ThreatSource\ThreatSourceService.cs" />
     <Compile Include="WebApiConfig.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -1,0 +1,45 @@
+﻿<div class="container">
+    <div class="tracer-page">
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <div class="search-row">
+                    <label for="searchbox">Enter the threat info:</label>
+
+                    <div class="input-group">
+                        <input id="searchbox" type="text" class="form-control" placeholder="IP, hash, ..." data-bind="searchText">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" data-bind="click: onSearchClicked" type="button">Go!</button>
+                        </span>
+                    </div>
+                    <div class="progress-container" data-bind="if: isBusy()">
+                        <div class="progress progress-striped active">
+                            <div class="progress-bar" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+        <div class="row">
+
+            <div class="result-part" data-bind="foreach: sources">
+                <div class="col-lg-4">
+                    <div  class="result-source-container">
+                        <div class="result-source">
+                            <h4 class="h4">
+                                <!--<i class="fa fa-user-secret"></i>-->
+                                <span data-bind="text: title"></span>
+                                <small data-bind="visible: isBusy">
+                                    <i class="fa fa-spin fa-refresh"></i>
+                                    <span>loading...</span>
+                                </small>
+                            </h4>
+                            
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -45,7 +45,10 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'bootstrap'],
     
     app.configurePlugins({
         router:true,
-        dialog: true
+        dialog: true,
+        widget: {
+            kinds: ['togglebutton']
+        }
     });
 
     app.start().then(function() {
