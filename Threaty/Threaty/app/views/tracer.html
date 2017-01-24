@@ -21,85 +21,189 @@
             </div>
             <div class="col-lg-4"></div>
         </div>
+        <!--        <div class="row">-->
+        <!--            <div class="col-md-12">-->
+        <!--                <h3 class="threaty-status" data-bind="visible: iocs().length && isIocInDb() !== null">-->
+        <!--                    <span data-bind="togglebutton: {}"></span>-->
+        <!--                    <span>-->
+        <!--$1$                        <span>This IOC </span>#1#-->
+        <!--                        <span>-->
+        <!--                            <span data-bind="if: isIocInDb()">Exists</span>-->
+        <!--                            <span data-bind="if: !isIocInDb()">Not Exists</span>-->
+        <!--                            <span> in database</span>-->
+        <!--                        </span>-->
+        <!--                    </span>-->
+        <!--                </h3>-->
+        <!--            </div>-->
+        <!--        </div>-->
         <div class="row">
-            <div class="col-md-12">
-                <h3 class="threaty-status" data-bind="visible: iocs().length && isIocInDb() !== null">
-                    <span data-bind="togglebutton: {}"></span>
-                    <span>
-<!--                        <span>This IOC </span>-->
-                        <span>
-                            <span data-bind="if: isIocInDb()">Exists</span>
-                            <span data-bind="if: !isIocInDb()">Not Exists</span>
-                            <span> in database</span>
-                        </span>
-                    </span>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="result-part">
-                
-                <table class="table table-striped table-hover tracer-results">
-                    <thead>
-                        <tr>
-                            <th style="width: 60px"></th>
-                            <th style="width: 150px">Source</th>
-                            <th style="width: 85px">Malware</th>
-                            <th style="width: 110px">Last Update</th>
-                            <th>Summary</th>
-                        </tr>
-                    </thead>
-                    <tbody data-bind="foreach: iocs">
-                        <tr data-bind="style: {color: status==='threat'?'red': ''}">
-                            <td>
-                                <i class="fa fa-check" data-bind="css: {'fa-check': status === 'ok', 'fa-warning': status==='threat'}" aria-hidden="true"></i>
-                                <span data-bind="togglebutton: {}"></span>
-                            </td>
-                            <td data-bind="text: sourceName">OTX</td>
-                            <td data-bind="text: malwareName">Floky</td>
-                            <td data-bind="lastUpdate">2012/05/22</td>
-                            <td data-bind="text: summary">
-                                Summary about Floky
-                            </td>
-                        </tr>
-                        <!--<tr>
-                            <td>
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                            </td>
-                            <td>OTX</td>
-                            <td>Floky</td>
-                            <td>2012/05/22</td>
-                            <td>
-                                <span data-bind="togglebutton: {}"></span>
-                                Summary about Floky
-                            </td>
-                        </tr>
-                        <tr class="danger">
-                            <td>
-                                <i class="fa fa-warning" aria-hidden="true"></i>
-                            </td>
-                            <td>OTX</td>
-                            <td>Floky</td>
-                            <td>2012/05/22</td>
-                            <td>
-                                <span data-bind="togglebutton: {}"></span>
-                                Summary about Floky
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
-                            </td>
-                            <td>OTX</td>
-                            <td>Floky</td>
-                            <td>2012/05/22</td>
-                            <td>
-                                <span data-bind="togglebutton: {}"></span>
-                                Summary about Floky
-                            </td>
-                        </tr>-->
-                    </tbody>
-                </table>
+            <div class="result-part" data-bind="if: isSomethingSearched">
+                <div>
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#repositories" aria-controls="repositories" role="tab" data-toggle="tab">
+                                <span class="badge" data-bind="if: iocs().length && !isBusyIoc()">
+                                    <span data-bind="text: iocs().length"></span>
+                                </span>
+                                <span data-bind="if: isBusyIoc()">
+                                    <i class="fa fa-circle-o-notch fa-spin"></i>
+                                </span>
+                                <span>Repositories</span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#database" aria-controls="database" role="tab" data-toggle="tab">
+                                <span class="badge" data-bind="if: dbIocs().length>0 && !isBusyDb()">
+                                    <span data-bind="text: dbIocs().length"></span>
+                                </span>
+                                <span data-bind="if: isBusyDb()">
+                                    <i class="fa fa-circle-o-notch fa-spin"></i>
+                                </span>
+                                <span>Threaty Database</span>
+
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="repositories">
+                            <table class="table table-striped table-hover tracer-results">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 60px"></th>
+                                        <th style="width: 150px">Source</th>
+                                        <th style="width: 85px">Malware</th>
+                                        <th style="width: 110px">Last Update</th>
+                                        <th>Summary</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: iocs">
+                                    <tr data-bind="style: {color: status==='threat'?'red': ''}">
+                                        <td>
+                                            <i class="fa fa-check" data-bind="css: {'fa-check': status === 'ok', 'fa-warning': status==='threat'}" aria-hidden="true"></i>
+                                            <span data-bind="togglebutton: {}"></span>
+                                        </td>
+                                        <td data-bind="text: sourceName">OTX</td>
+                                        <td data-bind="text: malwareName">Floky</td>
+                                        <td data-bind="lastUpdate">2012/05/22</td>
+                                        <td data-bind="text: summary">
+                                            Summary about Floky
+                                        </td>
+                                    </tr>
+                                    <!--<tr>
+                                        <td>
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        </td>
+                                        <td>OTX</td>
+                                        <td>Floky</td>
+                                        <td>2012/05/22</td>
+                                        <td>
+                                            <span data-bind="togglebutton: {}"></span>
+                                            Summary about Floky
+                                        </td>
+                                    </tr>
+                                    <tr class="danger">
+                                        <td>
+                                            <i class="fa fa-warning" aria-hidden="true"></i>
+                                        </td>
+                                        <td>OTX</td>
+                                        <td>Floky</td>
+                                        <td>2012/05/22</td>
+                                        <td>
+                                            <span data-bind="togglebutton: {}"></span>
+                                            Summary about Floky
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+                                        </td>
+                                        <td>OTX</td>
+                                        <td>Floky</td>
+                                        <td>2012/05/22</td>
+                                        <td>
+                                            <span data-bind="togglebutton: {}"></span>
+                                            Summary about Floky
+                                        </td>
+                                    </tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="database">
+                            <table class="table table-striped table-hover tracer-results">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 60px"></th>
+                                        <th style="width: 150px">Source</th>
+                                        <th style="width: 85px">Malware</th>
+                                        <th style="width: 200px">Time History</th>
+                                        <th>Summary</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: dbIocs">
+                                    <tr data-bind="css: {'inactive-db': !isActive}">
+                                        <td>
+<!--                                            <i class="fa fa-check" data-bind="css: {'fa-check': status === 'ok', 'fa-warning': status==='threat'}" aria-hidden="true"></i>-->
+                                            <span data-bind="togglebutton: {}"></span>
+                                        </td>
+                                        <td data-bind="text: sourceName"></td>
+                                        <td data-bind="text: malwareName"></td>
+                                        <td data-bind="text: lastUpdate"></td>
+                                        <td data-bind=""></td>
+                                    </tr>
+                                    <!--<tr>
+                                        <td>
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        </td>
+                                        <td>OTX</td>
+                                        <td>Floky</td>
+                                        <td>2012/05/22</td>
+                                        <td>
+                                            <span data-bind="togglebutton: {}"></span>
+                                            Summary about Floky
+                                        </td>
+                                    </tr>
+                                    <tr class="danger">
+                                        <td>
+                                            <i class="fa fa-warning" aria-hidden="true"></i>
+                                        </td>
+                                        <td>OTX</td>
+                                        <td>Floky</td>
+                                        <td>2012/05/22</td>
+                                        <td>
+                                            <span data-bind="togglebutton: {}"></span>
+                                            Summary about Floky
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+                                        </td>
+                                        <td>OTX</td>
+                                        <td>Floky</td>
+                                        <td>2012/05/22</td>
+                                        <td>
+                                            <span data-bind="togglebutton: {}"></span>
+                                            Summary about Floky
+                                        </td>
+                                    </tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
             </div>
         </div>
     </div>
