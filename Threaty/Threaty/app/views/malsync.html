@@ -4,10 +4,10 @@
             <div class="col-lg-4"></div>
             <div class="col-lg-4">
                 <div class="search-row">
-                    <label for="searchbox">Enter the threat info:</label>
+                    <label for="searchbox">Enter malware name:</label>
 
                     <div class="input-group">
-                        <input id="searchbox" type="text" class="form-control" placeholder="IP, hash, ..." data-bind="searchText">
+                        <input id="searchbox" type="text" class="form-control" placeholder="Floky, Stuxnet, ..." data-bind="searchText">
                         <span class="input-group-btn">
                             <button class="btn btn-default" data-bind="click: onSearchClicked" type="button">Go!</button>
                         </span>
@@ -22,24 +22,102 @@
             <div class="col-lg-4"></div>
         </div>
         <div class="row">
+            <div class="result-part" data-bind="if: isSomethingSearched">
+                <div>
 
-            <div class="result-part" data-bind="foreach: sources">
-                <div class="col-lg-4">
-                    <div  class="result-source-container">
-                        <div class="result-source">
-                            <h4 class="h4">
-                                <!--<i class="fa fa-user-secret"></i>-->
-                                <span data-bind="text: title"></span>
-                                <small data-bind="visible: isBusy">
-                                    <i class="fa fa-spin fa-refresh"></i>
-                                    <span>loading...</span>
-                                </small>
-                            </h4>
-                            
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#repositories" aria-controls="repositories" role="tab" data-toggle="tab">
+                                <span class="badge" data-bind="if: iocs().length && !isBusy()">
+                                    <span data-bind="text: iocs().length"></span>
+                                </span>
+                                <span data-bind="if: isBusy()">
+                                    <i class="fa fa-circle-o-notch fa-spin"></i>
+                                </span>
+                                <span>IOC List</span>
+                            </a>
+                        </li>
+<!--                        <li role="presentation">-->
+<!--                            <a href="#database" aria-controls="database" role="tab" data-toggle="tab">-->
+<!--                                <span class="badge" data-bind="if: dbIocs().length>0 && !isBusyDb()">-->
+<!--                                    <span data-bind="text: dbIocs().length"></span>-->
+<!--                                </span>-->
+<!--                                <span data-bind="if: isBusyDb()">-->
+<!--                                    <i class="fa fa-circle-o-notch fa-spin"></i>-->
+<!--                                </span>-->
+<!--                                <span>Threaty Database</span>-->
+<!---->
+<!--                            </a>-->
+<!--                        </li>-->
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="repositories">
+                            <table class="table table-striped table-hover tracer-results">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 60px"></th>
+<!--                                        <th style="width: 30px"></th>-->
+                                        <th style="width: 150px">IOC</th>
+                                        <th>Reported by</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: iocs">
+                                    <tr>
+                                        <td>
+<!--                                            <i class="fa fa-check" data-bind="css: {'fa-check': status === 'ok', 'fa-warning': status==='threat'}" aria-hidden="true"></i>-->
+                                            <span data-bind="togglebutton: {}"></span>
+                                        </td>
+<!--                                        <td class="ioc-type">-->
+<!--                                            <small class="badge " data-bind="text: iocType"></small>-->
+<!--                                        </td>-->
+                                        <td data-bind="text: signature"></td>
+                                        <td data-bind="foreach: reporterRepositories">
+                                            <span class="label label-danger" data-bind="text: name"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+<!--                        <div role="tabpanel" class="tab-pane" id="database">-->
+<!--                            <table class="table table-striped table-hover tracer-results">-->
+<!--                                <thead>-->
+<!--                                    <tr>-->
+<!--                                        <th style="width: 60px"></th>-->
+<!--                                        <th style="width: 150px">Source</th>-->
+<!--                                        <th style="width: 85px">Malware</th>-->
+<!--                                        <th style="width: 200px">Time History</th>-->
+<!--                                        <th>Summary</th>-->
+<!--                                    </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody data-bind="foreach: dbIocs">-->
+<!--                                    <tr data-bind="css: {'inactive-db': !isActive}">-->
+<!--                                        <td>-->
+<!--                                            $1$                                            <i class="fa fa-check" data-bind="css: {'fa-check': status === 'ok', 'fa-warning': status==='threat'}" aria-hidden="true"></i>#1#-->
+<!--                                            <span data-bind="togglebutton: {}"></span>-->
+<!--                                        </td>-->
+<!--                                        <td data-bind="text: sourceName"></td>-->
+<!--                                        <td data-bind="text: malwareName"></td>-->
+<!--                                        <td data-bind="text: lastUpdate"></td>-->
+<!--                                        <td data-bind=""></td>-->
+<!--                                    </tr>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                        </div>-->
                     </div>
+
                 </div>
+
+
+
+
+
+
+
+
+            </div>
         </div>
     </div>
-</div>
 </div>

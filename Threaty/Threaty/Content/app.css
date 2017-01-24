@@ -97,3 +97,9 @@
 .toggle-button .toggle-button-selected {
   color: blue;
 }
+.ioc-type {
+  text-align: right;
+}
+.ioc-type .badge {
+  font-size: 12px;
+}
