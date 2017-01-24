@@ -10,7 +10,7 @@
             router.map([
                 { route: '', title:'Home', moduleId: 'viewmodels/home', nav: true },
                 { route: 'tracer', title:'IOC Search', moduleId: 'viewmodels/tracer', nav: true },
-                { route: 'malsync', title: 'Malware Sync', moduleId: 'viewmodels/malsync', nav: true }
+                { route: 'malsync', title: 'Threat Sync', moduleId: 'viewmodels/malsync', nav: true }
             ]).buildNavigationModel();
             
             return router.activate();
